@@ -25,10 +25,10 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23ff7a00' transform='rotate(-20 40 40)'%3E%3Cellipse cx='40' cy='48' rx='13' ry='10'/%3E%3Ccircle cx='24' cy='32' r='5'/%3E%3Ccircle cx='35' cy='24' r='5'/%3E%3Ccircle cx='47' cy='24' r='5'/%3E%3Ccircle cx='57' cy='32' r='5'/%3E%3C/g%3E%3Cg fill='%23ff7a00' transform='rotate(25 118 118)'%3E%3Cellipse cx='118' cy='126' rx='13' ry='10'/%3E%3Ccircle cx='102' cy='110' r='5'/%3E%3Ccircle cx='113' cy='102' r='5'/%3E%3Ccircle cx='125' cy='102' r='5'/%3E%3Ccircle cx='135' cy='110' r='5'/%3E%3C/g%3E%3C/svg%3E"); }
   .wrap { position:relative; z-index:1; max-width:1120px; margin:0 auto; padding:0 18px 50px; }
 
-  .hero { display:flex; align-items:center; gap:28px; padding:38px 0 18px; flex-wrap:wrap; justify-content:center; }
+  .hero { display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px; padding:38px 0 18px; }
   .hero svg { width:150px; height:150px; flex:none; filter:drop-shadow(0 8px 20px rgba(255,79,154,.35)); animation:float 4s ease-in-out infinite; }
   @keyframes float { 50% { transform:translateY(-6px) rotate(-2deg); } }
-  .hero-text { max-width:560px; }
+  .hero-text { max-width:620px; margin:0 auto; }
   .badge { display:inline-block; background:#fff; color:var(--pinkdeep); border:1px solid var(--line2); padding:4px 12px; border-radius:999px; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; font-weight:600; }
   h1 { margin:10px 0 6px; font-size:clamp(2rem,6vw,3.2rem); line-height:1.05; font-weight:900; }
   h1 span { background:linear-gradient(90deg,var(--orange),var(--pink)); -webkit-background-clip:text; background-clip:text; color:transparent; }
@@ -40,7 +40,7 @@
   input, select { background:#fff; color:var(--text); border:1px solid var(--line); border-radius:14px; padding:12px 14px; font-size:1rem; }
   input { flex:1 1 240px; }
   input:focus, select:focus { outline:2px solid var(--pink); border-color:transparent; }
-  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+  .chips { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:20px; }
   .chip { border:1px solid var(--line); background:#fff; color:var(--muted); border-radius:999px; padding:8px 15px; cursor:pointer; font-size:.9rem; }
   .chip:hover { border-color:var(--pink); color:var(--pinkdeep); }
   .chip.on { background:linear-gradient(135deg,var(--orange),var(--pink)); border-color:transparent; color:#fff; font-weight:700; }
