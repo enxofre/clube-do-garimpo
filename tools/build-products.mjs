@@ -4,14 +4,16 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { norm, parseCsv, parseMoney, httpsOnly, findColumns } from "./csv.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const argv = process.argv.slice(2);
 const args = {};
 for (let i = 0; i < argv.length; i++) if (argv[i].startsWith("--")) args[argv[i].slice(2)] = argv[i + 1];
-const minDiscount = Number(args["min-discount"] ?? 10);
-const limit = Number(args.limit ?? 60);
-const store = args.store ?? "shopee";
+const minDiscount = Number(args["min-discount"] ?? 0);
+const limit = Number(args.limit ?? 300);
+const defaultStore = args.store ?? "shopee";
+const AMAZON_TAG = args["amazon-tag"] ?? "clubedogari05-20";
 
 // Accepted header names (lowercase, accents and separators removed).
 const ALIASES = {
@@ -21,71 +23,56 @@ const ALIASES = {
   image: ["imagelink", "image", "imageurl", "mainimage", "picture", "imagem", "urlimagem", "imagemprincipal"],
   url: ["affiliatelink", "producturl", "productlink", "link", "url", "shortlink", "linkafiliado", "linkdoproduto", "offerlink"],
   category: ["category", "categoryname", "categoria", "globalcategory1", "level1category"],
+  store: ["store", "loja", "marketplace"],
 };
 
-const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
-
-function parseCsv(text) {
-  text = text.replace(/^\uFEFF/, "");
-  const first = text.split(/\r?\n/, 1)[0];
-  const delim = [";", "\t", ","].map(d => [d, first.split(d).length]).sort((a, b) => b[1] - a[1])[0][0];
-  const rows = [];
-  let row = [], cell = "", q = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (q) {
-      if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; }
-      else if (c === '"') q = false;
-      else cell += c;
-    } else if (c === '"') q = true;
-    else if (c === delim) { row.push(cell); cell = ""; }
-    else if (c === "\n" || c === "\r") {
-      if (c === "\r" && text[i + 1] === "\n") i++;
-      row.push(cell); cell = "";
-      if (row.some(x => x !== "")) rows.push(row);
-      row = [];
-    } else cell += c;
-  }
-  row.push(cell);
-  if (row.some(x => x !== "")) rows.push(row);
-  return rows;
-}
-
-function parseMoney(v) {
-  if (v == null) return NaN;
-  let s = String(v).replace(/[^\d.,]/g, "");
-  if (!s) return NaN;
-  const lastComma = s.lastIndexOf(","), lastDot = s.lastIndexOf(".");
-  s = lastComma > lastDot ? s.replace(/\./g, "").replace(",", ".") : s.replace(/,/g, "");
-  return Number(s);
-}
-
-const httpsOnly = u => {
-  try { const x = new URL(u); return x.protocol === "https:" ? x.href : null; } catch { return null; }
+const HOSTS = [
+  [/(^|\.)shopee\./, "shopee"], [/(^|\.)mercadolivre\.|(^|\.)meli\.la$|mercadolibre\./, "mercadolivre"],
+  [/(^|\.)amazon\.|(^|\.)amzn\.to$/, "amazon"], [/(^|\.)magazineluiza\.|(^|\.)magalu\.|(^|\.)divulgador\.magalu/, "magalu"],
+];
+const storeOf = (url, fallback) => {
+  try { const h = new URL(url).hostname; return HOSTS.find(([re]) => re.test(h))?.[1] ?? fallback; } catch { return fallback; }
 };
+
+// Amazon rows only need ASIN + title; the affiliate link is built here and no price is stored
+// (prices must come from the live page or the official API).
+function mapAmazon(rows, file) {
+  const headers = rows[0].map(norm);
+  const i = n => headers.indexOf(n);
+  const [asinI, titleI, imageI, catI] = [i("asin"), i("title") >= 0 ? i("title") : i("nome"), i("image") >= 0 ? i("image") : i("imagem"), i("category") >= 0 ? i("category") : i("categoria")];
+  if (titleI < 0) throw new Error(`${file}: coluna title/nome não encontrada. Cabeçalhos: ${rows[0].join(" | ")}`);
+  return rows.slice(1).map(r => {
+    const asin = (r[asinI] ?? "").trim().toUpperCase();
+    return {
+      title: (r[titleI] ?? "").trim().slice(0, 140),
+      category: catI >= 0 ? (r[catI] ?? "").trim() || "Outros" : "Outros",
+      store: "amazon",
+      image: imageI >= 0 ? httpsOnly(r[imageI]) : null,
+      url: /^[A-Z0-9]{10}$/.test(asin) ? `https://www.amazon.com.br/dp/${asin}?tag=${encodeURIComponent(AMAZON_TAG)}` : null,
+    };
+  }).filter(p => p.title && p.url);
+}
 
 function mapRows(rows, file) {
-  const headers = rows[0].map(norm);
-  const col = {};
-  for (const [field, names] of Object.entries(ALIASES)) {
-    const idx = names.map(n => headers.indexOf(n)).find(i => i >= 0);
-    if (idx !== undefined) col[field] = idx;
-  }
-  const missing = ["title", "price", "image", "url"].filter(f => col[f] === undefined);
+  if (rows[0].map(norm).includes("asin")) return mapAmazon(rows, file);
+  const col = findColumns(rows[0], ALIASES);
+  const missing = ["title", "price", "url"].filter(f => col[f] === undefined);
   if (missing.length) throw new Error(`${file}: colunas não reconhecidas para: ${missing.join(", ")}. Cabeçalhos: ${rows[0].join(" | ")}`);
 
   return rows.slice(1).map(r => {
     const price = parseMoney(r[col.price]);
     let oldPrice = col.oldPrice !== undefined ? parseMoney(r[col.oldPrice]) : NaN;
     if (!(oldPrice > price)) oldPrice = undefined;
+    const url = httpsOnly(r[col.url]);
+    const declared = col.store !== undefined ? norm(r[col.store] ?? "") : "";
     return {
       title: (r[col.title] ?? "").trim().slice(0, 140),
       category: col.category !== undefined ? (r[col.category] ?? "").trim() || "Outros" : "Outros",
-      store,
+      store: storeOf(url, declared || defaultStore),
       price,
       oldPrice,
-      image: httpsOnly(r[col.image]),
-      url: httpsOnly(r[col.url]),
+      image: col.image !== undefined ? httpsOnly(r[col.image]) : null,
+      url,
     };
   }).filter(p => p.title && p.price > 0 && p.url);
 }
@@ -94,11 +81,18 @@ const dir = join(root, "feeds");
 const files = existsSync(dir) ? readdirSync(dir).filter(f => f.toLowerCase().endsWith(".csv")) : [];
 if (!files.length) { console.error("Nenhum CSV em ./feeds. Baixe o Feed de produto no painel de afiliados e salve lá."); process.exit(1); }
 
-let products = files.flatMap(f => mapRows(parseCsv(readFileSync(join(dir, f), "utf8")), f));
+let products = files.flatMap(f => {
+  const rows = parseCsv(readFileSync(join(dir, f), "utf8"));
+  return rows.length > 1 ? mapRows(rows, f) : [];
+});
 const seen = new Set();
 products = products.filter(p => !seen.has(p.url) && seen.add(p.url));
 const disc = p => (p.oldPrice ? 1 - p.price / p.oldPrice : 0);
-products = products.filter(p => disc(p) * 100 >= minDiscount).sort((a, b) => disc(b) - disc(a)).slice(0, limit);
+products = products.filter(p => p.price === undefined || disc(p) * 100 >= minDiscount).sort((a, b) => disc(b) - disc(a)).slice(0, limit);
 
 writeFileSync(join(root, "products.js"), "// Generated by tools/build-products.mjs. Do not edit by hand.\nwindow.PRODUCTS = " + JSON.stringify(products, null, 2) + ";\n");
+
+const siteFile = join(root, "site.js");
+const today = new Date().toISOString().slice(0, 10);
+writeFileSync(siteFile, readFileSync(siteFile, "utf8").replace(/updatedAt: "[\d-]+"/, `updatedAt: "${today}"`));
 console.log(`${products.length} produtos gravados em products.js (desconto mínimo ${minDiscount}%).`);

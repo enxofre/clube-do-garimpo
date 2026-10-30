@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel — Clube do Garimpo</title>
+<style>
+  :root { --red:#a3192a; --reddeep:#86121f; --rose:#d38a93; --line:#e9dfd3; --text:#3a1a20; --muted:#8a6b6f; --green:#2f7d4f; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Segoe UI",system-ui,sans-serif; color:var(--text); background:linear-gradient(160deg,#f6f3ec,#f7dfe2); min-height:100vh; }
+  main { max-width:820px; margin:0 auto; padding:24px 16px 60px; }
+  header { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  header img { width:56px; height:56px; border-radius:50%; border:3px solid #fff; box-shadow:0 6px 16px rgba(163,25,42,.25); }
+  h1 { margin:0; font-size:1.7rem; background:linear-gradient(90deg,var(--red),var(--rose)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { color:var(--muted); margin:6px 0 16px; }
+  .tabs { display:flex; gap:8px; margin-bottom:16px; }
+  .tab { background:#fff; color:var(--reddeep); border:2px solid #efc7cd; padding:10px 22px; }
+  .tab.on { background:linear-gradient(135deg,var(--red),var(--rose)); color:#fff; border-color:transparent; }
+  section { background:#fff; border:1px solid var(--line); border-radius:20px; padding:18px; margin-bottom:16px; box-shadow:0 6px 18px rgba(163,25,42,.06); }
+  h2 { margin:0 0 6px; font-size:1.1rem; }
+  p { margin:0 0 12px; color:var(--muted); font-size:.92rem; }
+  button { cursor:pointer; border:0; border-radius:999px; padding:12px 22px; font-weight:800; font-size:1rem; color:#fff; background:linear-gradient(135deg,var(--red),var(--rose)); }
+  button:disabled { opacity:.55; cursor:wait; }
+  button.ghost { background:#fff; color:var(--reddeep); border:1px solid #efc7cd; padding:6px 12px; font-size:.85rem; }
+  input, select { width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:12px; font-size:1rem; margin-bottom:8px; background:#fff; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .item { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 0; border-top:1px solid #f1e8de; font-size:.93rem; }
+  #log { white-space:pre-wrap; background:#2a1a1e; color:#ffe9df; border-radius:14px; padding:12px; font-size:.85rem; min-height:46px; }
+  .pill { display:inline-block; background:#fff0f3; color:var(--reddeep); border:1px solid #efc7cd; border-radius:999px; padding:3px 12px; font-size:.85rem; font-weight:600; }
+  .links a { display:inline-block; margin:0 8px 8px 0; color:var(--reddeep); font-weight:600; font-size:.9rem; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px; margin-bottom:14px; }
+  .stat { background:linear-gradient(135deg,#fff,#fdf0f2); border:1px solid #efc7cd; border-radius:16px; padding:14px; }
+  .stat b { display:block; font-size:1.5rem; color:var(--reddeep); }
+  .stat span { color:var(--muted); font-size:.82rem; }
+  table { width:100%; border-collapse:collapse; font-size:.88rem; }
+  th, td { text-align:left; padding:7px 6px; border-top:1px solid #f1e8de; }
+  th { color:var(--muted); font-weight:600; }
+  td.num { text-align:right; white-space:nowrap; }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="/assets/logo.jpg" alt="d|g">
+    <div><h1>Painel do Clube do Garimpo</h1></div>
+  </header>
+  <p class="sub">Controle o site e acompanhe suas vendas, sem mexer em código. <span class="pill" id="count">...</span></p>
+
+  <div class="tabs">
+    <button class="tab on" data-tab="offers">🛍️ Ofertas</button>
+    <button class="tab" data-tab="sales">💰 Vendas</button>
+  </div>
+
+  <div id="tab-offers">
+    <section>
+      <h2>1. Atualizar produtos da Shopee</h2>
+      <p>Lê a vitrine da Debs na Collshp (fotos, preços e links de afiliada já prontos).</p>
+      <button id="btnShopee">🔄 Atualizar da Shopee</button>
+    </section>
+
+    <section>
+      <h2>2. Cupons</h2>
+      <p>Os cupons da aba <b>Cupons</b> são coletados de verdade (códigos ativos do Promobit). Cupons vencidos somem sozinhos do site.</p>
+      <button id="btnSyncCoupons">🔄 Buscar cupons reais</button>
+      <p style="margin-top:14px">Ou adicione um cupom manualmente:</p>
+      <div class="row">
+        <select id="cStore">
+          <option value="shopee">Shopee</option>
+          <option value="amazon">Amazon</option>
+          <option value="mercadolivre">Mercado Livre</option>
+          <option value="magalu">Magalu</option>
+          <option value="outros">Outra loja</option>
+        </select>
+        <input id="cCode" placeholder="Código (ex.: GARIMPO10)">
+      </div>
+      <input id="cDesc" placeholder="Descrição (ex.: 10% off em eletrodomésticos)">
+      <div class="row">
+        <input id="cUrl" placeholder="Link de afiliada (https://...)">
+        <input id="cDate" type="date" title="Válido até (opcional)">
+      </div>
+      <button id="btnCoupon">🎟️ Adicionar cupom</button>
+      <div id="couponList"></div>
+    </section>
+
+    <section>
+      <h2>3. Adicionar produto do Mercado Livre (ou outra loja)</h2>
+      <p>Cole o <b>link de afiliada</b> gerado no painel da loja. A loja é reconhecida pelo link.</p>
+      <input id="mUrl" placeholder="Link de afiliada (https://...)">
+      <input id="mTitle" placeholder="Nome do produto">
+      <div class="row">
+        <input id="mPrice" placeholder="Preço atual (ex.: 79,90)">
+        <input id="mOld" placeholder="Preço antigo (opcional)">
+      </div>
+      <div class="row">
+        <input id="mCat" placeholder="Categoria (ex.: Casa)">
+        <input id="mImage" placeholder="Link da foto (opcional)">
+      </div>
+      <button id="btnManual">➕ Adicionar</button>
+      <div id="manualList"></div>
+    </section>
+
+    <section>
+      <h2>4. Adicionar produto da Amazon</h2>
+      <p>O link sai com o código de afiliada automaticamente. A Amazon não permite exibir preço sem a API oficial.</p>
+      <div class="row">
+        <input id="asin" placeholder="ASIN (ex.: B0XXXXXXXX)" maxlength="10">
+        <input id="category" placeholder="Categoria (ex.: Casa)">
+      </div>
+      <input id="title" placeholder="Nome do produto">
+      <input id="image" placeholder="Link da foto (opcional, https://...)">
+      <button id="btnAmazon">➕ Adicionar</button>
+      <div id="amazonList"></div>
+    </section>
+
+    <section>
+      <h2>5. Publicar no site</h2>
+      <p>Envia as mudanças para o GitHub. O site atualiza em 1 a 2 minutos.</p>
+      <button id="btnPublish">🚀 Publicar</button>
+      <span class="pill" id="dirty"></span>
+    </section>
+  </div>
+
+  <div id="tab-sales" class="hidden">
+    <section>
+      <h2>Resumo das vendas</h2>
+      <div class="cards" id="cards"></div>
+      <div id="byStore"></div>
+    </section>
+
+    <section>
+      <h2>Importar relatório de vendas</h2>
+      <p>Cada loja só entrega as vendas dentro do painel de afiliados. Baixe o relatório em <b>CSV</b> e importe aqui (importar de novo substitui o anterior daquela loja).</p>
+      <div class="links">
+        <a href="https://affiliate.shopee.com.br" target="_blank" rel="noopener">Shopee → Relatório de vendas</a>
+        <a href="https://associados.amazon.com.br" target="_blank" rel="noopener">Amazon → Relatórios</a>
+        <a href="https://www.mercadolivre.com.br/afiliados" target="_blank" rel="noopener">Mercado Livre → Afiliados</a>
+      </div>
+      <div class="row">
+        <select id="sStore">
+          <option value="shopee">Shopee</option>
+          <option value="amazon">Amazon</option>
+          <option value="mercadolivre">Mercado Livre</option>
+          <option value="outras">Outras lojas</option>
+        </select>
+        <input id="sFile" type="file" accept=".csv,text/csv">
+      </div>
+      <button id="btnSales">📥 Importar relatório</button>
+    </section>
+
+    <section>
+      <h2>Últimas vendas</h2>
+      <div id="salesTable"></div>
+    </section>
+  </div>
+
+  <div id="log">Pronto. Escolha uma ação acima.</div>
+</main>
+<script>
+  const $ = id => document.getElementById(id);
+  const call = (method, path, body) => fetch(path, { method, headers: { "Content-Type": "application/json", "X-Panel": "1" }, body: body ? JSON.stringify(body) : undefined }).then(r => r.json());
+  const brl = v => Number(v || 0).toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+  const STORE = { shopee:"Shopee", amazon:"Amazon", mercadolivre:"Mercado Livre", outras:"Outras" };
+  const mk = (tag, text, cls) => { const e = document.createElement(tag); if (text !== undefined) e.textContent = text; if (cls) e.className = cls; return e; };
+
+  const busy = async (btn, label, fn) => {
+    btn.disabled = true; $("log").textContent = label + "...";
+    try { const r = await fn(); $("log").textContent = (r.ok === false ? "❌ " : "✅ ") + (r.log || "Concluído."); }
+    catch (e) { $("log").textContent = "❌ " + e.message; }
+    btn.disabled = false; load();
+  };
+
+  document.querySelectorAll(".tab").forEach(t => t.onclick = () => {
+    document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === t));
+    $("tab-offers").classList.toggle("hidden", t.dataset.tab !== "offers");
+    $("tab-sales").classList.toggle("hidden", t.dataset.tab !== "sales");
+  });
+
+  function listOf(box, items, label, remove) {
+    box.replaceChildren(...items.map(p => {
+      const d = mk("div", undefined, "item");
+      const b = mk("button", "Remover", "ghost");
+      b.onclick = () => busy(b, "Removendo", () => remove(p));
+      d.append(mk("span", label(p)), b); return d;
+    }));
+  }
+
+  function renderSales(sales) {
+    const total = sales.reduce((a, s) => a + s.commission, 0);
+    const revenue = sales.reduce((a, s) => a + s.orderValue, 0);
+    const stat = (v, l) => { const d = mk("div", undefined, "stat"); d.append(mk("b", v), mk("span", l)); return d; };
+    $("cards").replaceChildren(stat(brl(total), "Comissão total"), stat(String(sales.length), "Pedidos"), stat(brl(revenue), "Valor vendido"), stat(sales.length ? brl(total / sales.length) : "—", "Comissão média"));
+    const by = {};
+    sales.forEach(s => { by[s.store] = (by[s.store] || 0) + s.commission; });
+    $("byStore").replaceChildren(...Object.entries(by).map(([k, v]) => {
+      const d = mk("div", undefined, "item"); d.append(mk("span", STORE[k] || k), mk("b", brl(v)));
+      const b = mk("button", "Limpar", "ghost"); b.onclick = () => busy(b, "Limpando", () => call("DELETE", "/api/sales/" + k)); d.append(b); return d;
+    }));
+    const t = mk("table"); const h = mk("tr");
+    ["Data", "Loja", "Produto", "Status", "Comissão"].forEach(x => h.append(mk("th", x))); t.append(h);
+    sales.slice().reverse().slice(0, 50).forEach(s => {
+      const r = mk("tr"); r.append(mk("td", s.date), mk("td", STORE[s.store] || s.store), mk("td", s.product), mk("td", s.status), mk("td", brl(s.commission), "num")); t.append(r);
+    });
+    $("salesTable").replaceChildren(sales.length ? t : mk("p", "Nenhuma venda importada ainda."));
+  }
+
+  async function load() {
+    const s = await call("GET", "/api/state");
+    $("count").textContent = s.products + " produtos no site";
+    $("dirty").textContent = s.dirty ? "Há mudanças não publicadas" : "Tudo publicado";
+    listOf($("amazonList"), s.amazon, p => `${p.asin} — ${p.title}`, p => call("DELETE", "/api/amazon/" + p.asin));
+    listOf($("manualList"), s.manual, p => `${p.title} — ${brl(p.price)}`, p => call("DELETE", "/api/manual?url=" + encodeURIComponent(p.url)));
+    listOf($("couponList"), s.coupons, c => `${STORE[c.store] || c.store} — ${c.code}${c.validUntil ? " (até " + c.validUntil + ")" : ""}`, c => call("DELETE", `/api/coupons?store=${c.store}&code=${encodeURIComponent(c.code)}`));
+    renderSales(await call("GET", "/api/sales"));
+  }
+
+  $("btnShopee").onclick = e => busy(e.target, "Coletando produtos da Shopee (pode levar um minuto)", () => call("POST", "/api/shopee"));
+  $("btnSyncCoupons").onclick = e => busy(e.target, "Coletando cupons (pode levar um minuto)", () => call("POST", "/api/coupons/sync"));
+  $("btnCoupon").onclick = e => busy(e.target, "Salvando cupom", async () => {
+    const r = await call("POST", "/api/coupons", { store: $("cStore").value, code: $("cCode").value, description: $("cDesc").value, url: $("cUrl").value, validUntil: $("cDate").value });
+    if (r.ok) ["cCode", "cDesc", "cUrl", "cDate"].forEach(i => $(i).value = "");
+    return r;
+  });
+  $("btnManual").onclick = e => busy(e.target, "Adicionando", async () => {
+    const r = await call("POST", "/api/manual", { url: $("mUrl").value, title: $("mTitle").value, price: $("mPrice").value, oldPrice: $("mOld").value, category: $("mCat").value, image: $("mImage").value });
+    if (r.ok) ["mUrl", "mTitle", "mPrice", "mOld", "mCat", "mImage"].forEach(i => $(i).value = "");
+    return r;
+  });
+  $("btnAmazon").onclick = e => busy(e.target, "Adicionando", async () => {
+    const r = await call("POST", "/api/amazon", { asin: $("asin").value, title: $("title").value, category: $("category").value, image: $("image").value });
+    if (r.ok) ["asin", "title", "category", "image"].forEach(i => $(i).value = "");
+    return r;
+  });
+  $("btnSales").onclick = e => busy(e.target, "Importando", async () => {
+    const f = $("sFile").files[0];
+    if (!f) return { ok: false, log: "Escolha o arquivo CSV do relatório." };
+    return call("POST", "/api/sales", { store: $("sStore").value, csv: await f.text() });
+  });
+  $("btnPublish").onclick = e => { if (confirm("Publicar as mudanças no site agora?")) busy(e.target, "Publicando", () => call("POST", "/api/publish")); };
+  load();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "clube-do-garimpo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "coletar": "node tools/fetch-collshp.mjs",
+    "gerar": "node tools/build-products.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "^1.49.0"
+  }
+}

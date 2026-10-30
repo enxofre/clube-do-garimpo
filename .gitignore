@@ -1,0 +1,4 @@
+node_modules/
+.panel-token
+# Private admin data (sales/commissions) must never be published
+data/

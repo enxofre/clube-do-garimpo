@@ -4,101 +4,105 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Clube do Garimpo — Ofertas</title>
-<meta name="description" content="Os gatos do Clube do Garimpo farejam as melhores ofertas e cupons para você economizar.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%B1%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Garimpo de ofertas e descontos selecionados pela Debora Garimpa.">
+<link rel="icon" href="assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#fff6f0; --bg2:#fff0f5; --card:#ffffff; --line:#ffd6c4; --line2:#ffc2d9;
-    --text:#3b1f24; --muted:#8c5a62; --orange:#ff7a00; --orange2:#ff9f43; --pink:#ff4f9a; --pinkdeep:#d62c7a; --gold:#ffd23f; --green:#1fb865;
+    --cream:#f6f3ec; --cream2:#efe9df; --card:#ffffff; --line:#e9dfd3; --line2:#efc7cd;
+    --text:#3a1a20; --muted:#8a6b6f;
+    --red:#a3192a; --reddeep:#86121f; --rose:#d38a93; --rosepale:#f7dfe2; --green:#2f7d4f;
+    --serif:"Fraunces","Recoleta","Cooper Black",Georgia,serif;
   }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body {
     margin:0; font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif; color:var(--text);
     background:
-      radial-gradient(900px 460px at 85% -10%, rgba(255,79,154,.22), transparent 60%),
-      radial-gradient(800px 420px at 0% 0%, rgba(255,122,0,.20), transparent 60%),
-      var(--bg);
+      radial-gradient(800px 380px at 90% -8%, rgba(217,112,125,.22), transparent 60%),
+      radial-gradient(700px 360px at 0% 0%, rgba(163,25,42,.10), transparent 60%),
+      var(--cream);
     min-height:100vh;
   }
-  .paws { position:fixed; inset:0; pointer-events:none; opacity:.09; z-index:0;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23ff7a00' transform='rotate(-20 40 40)'%3E%3Cellipse cx='40' cy='48' rx='13' ry='10'/%3E%3Ccircle cx='24' cy='32' r='5'/%3E%3Ccircle cx='35' cy='24' r='5'/%3E%3Ccircle cx='47' cy='24' r='5'/%3E%3Ccircle cx='57' cy='32' r='5'/%3E%3C/g%3E%3Cg fill='%23ff7a00' transform='rotate(25 118 118)'%3E%3Cellipse cx='118' cy='126' rx='13' ry='10'/%3E%3Ccircle cx='102' cy='110' r='5'/%3E%3Ccircle cx='113' cy='102' r='5'/%3E%3Ccircle cx='125' cy='102' r='5'/%3E%3Ccircle cx='135' cy='110' r='5'/%3E%3C/g%3E%3C/svg%3E"); }
+  .sparkles { position:fixed; inset:0; pointer-events:none; opacity:.10; z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170' viewBox='0 0 170 170'%3E%3Cpath fill='%23d9707d' d='M40 18c2 14 6 18 20 20-14 2-18 6-20 20-2-14-6-18-20-20 14-2 18-6 20-20z'/%3E%3Cpath fill='%23c40d2e' d='M125 108c1.5 10 4.5 13.500 14.500 15-10 1.500-13 4.500-14.500 14.500-1.500-10-4.500-13-14.500-14.500 10-1.500 13-5 14.500-15z'/%3E%3C/svg%3E"); }
   .wrap { position:relative; z-index:1; max-width:1120px; margin:0 auto; padding:0 18px 50px; }
 
-  .hero { display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px; padding:38px 0 18px; }
-  .hero svg { width:150px; height:150px; flex:none; filter:drop-shadow(0 8px 20px rgba(255,79,154,.35)); animation:float 4s ease-in-out infinite; }
-  @keyframes float { 50% { transform:translateY(-6px) rotate(-2deg); } }
+  .hero { display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px; padding:36px 0 14px; }
+  .logo { width:132px; height:132px; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow:0 10px 28px rgba(163,25,42,.25); }
   .hero-text { max-width:620px; margin:0 auto; }
-  .badge { display:inline-block; background:#fff; color:var(--pinkdeep); border:1px solid var(--line2); padding:4px 12px; border-radius:999px; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; font-weight:600; }
-  h1 { margin:10px 0 6px; font-size:clamp(2rem,6vw,3.2rem); line-height:1.05; font-weight:900; }
-  h1 span { background:linear-gradient(90deg,var(--orange),var(--pink)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .badge { display:inline-block; background:#fff; color:var(--reddeep); border:1px solid var(--line2); padding:4px 14px; border-radius:999px; font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700; }
+  h1 { margin:10px 0 6px; font-family:var(--serif); font-size:clamp(2.1rem,6.5vw,3.4rem); line-height:1.05; font-weight:900; letter-spacing:-.01em; }
+  h1 span { background:linear-gradient(90deg,var(--red),var(--rose)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .hero p { margin:0; color:var(--muted); font-size:1.05rem; }
-  .cta { display:inline-block; margin-top:16px; padding:11px 22px; border-radius:999px; background:linear-gradient(135deg,var(--orange),var(--pink)); color:#fff; font-weight:800; text-decoration:none; box-shadow:0 8px 22px rgba(255,79,154,.35); }
+  .cta { display:inline-block; margin-top:16px; padding:12px 24px; border-radius:999px; background:linear-gradient(135deg,var(--red),var(--rose)); color:#fff; font-weight:800; text-decoration:none; box-shadow:0 8px 22px rgba(163,25,42,.3); }
   .cta:hover { filter:brightness(1.06); }
+
+  .tabs { display:flex; justify-content:center; gap:10px; margin:18px 0 4px; flex-wrap:wrap; }
+  .tab { border:2px solid var(--line2); background:#fff; color:var(--reddeep); font-family:var(--serif); font-weight:900; font-size:1.02rem; padding:10px 22px; border-radius:999px; cursor:pointer; }
+  .tab.on { background:linear-gradient(135deg,var(--red),var(--rose)); border-color:transparent; color:#fff; box-shadow:0 8px 20px rgba(163,25,42,.28); }
 
   .controls { display:flex; flex-wrap:wrap; gap:10px; margin:22px 0 14px; }
   input, select { background:#fff; color:var(--text); border:1px solid var(--line); border-radius:14px; padding:12px 14px; font-size:1rem; }
   input { flex:1 1 240px; }
-  input:focus, select:focus { outline:2px solid var(--pink); border-color:transparent; }
+  input:focus, select:focus { outline:2px solid var(--rose); border-color:transparent; }
   .chips { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:20px; }
-  .chip { border:1px solid var(--line); background:#fff; color:var(--muted); border-radius:999px; padding:8px 15px; cursor:pointer; font-size:.9rem; }
-  .chip:hover { border-color:var(--pink); color:var(--pinkdeep); }
-  .chip.on { background:linear-gradient(135deg,var(--orange),var(--pink)); border-color:transparent; color:#fff; font-weight:700; }
+  .chip { border:1px solid var(--line); background:#fff; color:var(--muted); border-radius:999px; padding:8px 16px; cursor:pointer; font-size:.9rem; }
+  .chip:hover { border-color:var(--rose); color:var(--reddeep); }
+  .chip.on { background:var(--red); border-color:var(--red); color:#fff; font-weight:700; }
 
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(235px,1fr)); gap:18px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:20px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 4px 14px rgba(255,122,0,.08); transition:transform .18s, border-color .18s, box-shadow .18s; }
-  .card:hover { transform:translateY(-4px); border-color:var(--pink); box-shadow:0 14px 30px rgba(255,79,154,.2); }
-  .thumb { position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; font-size:4rem; background:linear-gradient(135deg,#ffe3d0,#ffd1e3); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:20px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 4px 14px rgba(58,26,32,.06); transition:transform .18s, border-color .18s, box-shadow .18s; }
+  .card:hover { transform:translateY(-4px); border-color:var(--rose); box-shadow:0 14px 30px rgba(163,25,42,.16); }
+  .thumb { position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; font-size:3.6rem; background:linear-gradient(135deg,var(--cream2),var(--rosepale)); }
   .thumb img { width:100%; height:100%; object-fit:cover; }
-  .off { position:absolute; top:10px; left:10px; background:var(--green); color:#fff; font-weight:800; font-size:.85rem; padding:4px 10px; border-radius:999px; }
-  .store { position:absolute; top:10px; right:10px; background:rgba(255,255,255,.92); color:var(--text); border:1px solid var(--line); font-size:.74rem; padding:4px 9px; border-radius:999px; }
+  .thumb .ph { width:46%; border-radius:50%; opacity:.9; }
+  .off { position:absolute; top:10px; left:10px; background:var(--red); color:#fff; font-weight:800; font-size:.85rem; padding:4px 11px; border-radius:999px; }
+  .store { position:absolute; top:10px; right:10px; background:rgba(255,255,255,.94); color:var(--text); border:1px solid var(--line); font-size:.74rem; padding:4px 10px; border-radius:999px; }
   .body { padding:14px; display:flex; flex-direction:column; gap:7px; flex:1; }
   .title { font-size:.97rem; line-height:1.3; min-height:2.6em; }
   .old { color:var(--muted); text-decoration:line-through; font-size:.85rem; }
-  .price { font-size:1.5rem; font-weight:900; color:var(--pinkdeep); }
+  .price { font-family:var(--serif); font-size:1.55rem; font-weight:900; color:var(--reddeep); }
   .save { color:var(--green); font-size:.82rem; font-weight:600; }
-  .btn { margin-top:auto; text-align:center; text-decoration:none; background:linear-gradient(135deg,var(--orange),var(--pink)); color:#fff; font-weight:800; padding:11px; border-radius:999px; }
+  .btn { margin-top:auto; text-align:center; text-decoration:none; background:linear-gradient(135deg,var(--red),var(--rose)); color:#fff; font-weight:800; padding:11px; border-radius:999px; }
   .btn:hover { filter:brightness(1.07); }
 
+  .coupon { background:var(--card); border:2px dashed var(--rose); border-radius:20px; padding:16px; display:flex; flex-direction:column; gap:10px; }
+  .coupon .store { position:static; align-self:flex-start; }
+  .coupon .desc { font-size:1rem; line-height:1.35; }
+  .coupon .code { display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--rosepale); border-radius:12px; padding:10px 12px; font-family:ui-monospace,Consolas,monospace; font-weight:800; font-size:1.1rem; color:var(--reddeep); letter-spacing:.04em; }
+  .coupon .copy { border:0; cursor:pointer; background:#fff; color:var(--reddeep); border-radius:999px; padding:6px 14px; font-weight:800; font-size:.85rem; }
+  .coupon .valid { color:var(--muted); font-size:.82rem; }
+  .hidden { display:none !important; }
+
   .empty { text-align:center; padding:46px 16px; color:var(--muted); }
-  .empty svg { width:120px; height:120px; margin-bottom:6px; }
-  .empty h2 { color:var(--text); margin:6px 0; }
+  .empty img { width:110px; height:110px; border-radius:50%; margin-bottom:6px; border:3px solid #fff; box-shadow:0 8px 22px rgba(163,25,42,.2); }
+  .empty h2 { font-family:var(--serif); color:var(--text); margin:6px 0; }
   footer { position:relative; z-index:1; text-align:center; color:var(--muted); font-size:.8rem; padding:0 18px 34px; max-width:720px; margin:0 auto; }
-  footer b { color:var(--pinkdeep); }
+  footer b { color:var(--reddeep); }
 </style>
 </head>
 <body>
-<div class="paws" aria-hidden="true"></div>
-
-<template id="cat">
-  <svg viewBox="0 0 200 200" role="img" aria-label="Gato minerador do Clube do Garimpo">
-    <polygon points="34,100 38,38 84,68" fill="#ff8a1f"/><polygon points="166,100 162,38 116,68" fill="#ff8a1f"/>
-    <polygon points="44,92 46,54 72,72" fill="#ffc9a0"/><polygon points="156,92 154,54 128,72" fill="#ffc9a0"/>
-    <ellipse cx="100" cy="116" rx="70" ry="58" fill="#ff8a1f"/>
-    <path d="M70 100 l6 -16 M100 96 l0 -18 M130 100 l-6 -16" stroke="#c4600a" stroke-width="5" stroke-linecap="round" fill="none"/>
-    <ellipse cx="100" cy="140" rx="30" ry="22" fill="#ffe3c4"/>
-    <path d="M44 92 Q100 8 156 92 Z" fill="#ffd23f" stroke="#b8860b" stroke-width="3"/>
-    <rect x="36" y="88" width="128" height="12" rx="6" fill="#f5b800" stroke="#b8860b" stroke-width="3"/>
-    <circle cx="100" cy="52" r="12" fill="#fff7c2" stroke="#b8860b" stroke-width="3"/>
-    <ellipse cx="74" cy="120" rx="9" ry="11" fill="#1a1208"/><ellipse cx="126" cy="120" rx="9" ry="11" fill="#1a1208"/>
-    <circle cx="77" cy="116" r="3.2" fill="#fff"/><circle cx="129" cy="116" r="3.2" fill="#fff"/>
-    <polygon points="93,132 107,132 100,141" fill="#ff6f91"/>
-    <path d="M100 141 Q91 152 82 146 M100 141 Q109 152 118 146" stroke="#3a1c00" stroke-width="3" stroke-linecap="round" fill="none"/>
-    <path d="M60 138 L28 132 M60 146 L28 150 M140 138 L172 132 M140 146 L172 150" stroke="#fff4e6" stroke-width="2.5" stroke-linecap="round"/>
-  </svg>
-</template>
+<div class="sparkles" aria-hidden="true"></div>
 
 <main class="wrap">
   <section class="hero">
-    <div id="logo"></div>
+    <img class="logo" src="assets/logo.jpg" alt="Logo Debora Garimpa (d|g)">
     <div class="hero-text">
-      <span class="badge">🐾 Garimpo de ofertas</span>
+      <span class="badge">✦ Garimpo de ofertas</span>
       <h1><span id="name"></span></h1>
       <p id="tagline"></p>
       <a class="cta" id="insta" href="#" target="_blank" rel="noopener noreferrer">Siga no Instagram</a>
     </div>
   </section>
 
+  <div class="tabs" id="tabs" role="tablist">
+    <button type="button" class="tab" data-tab="all" role="tab">🛍️ Todos os produtos</button>
+    <button type="button" class="tab" data-tab="coupons" role="tab">🎟️ Cupons</button>
+  </div>
+  <div id="productArea">
   <div class="controls">
     <input id="q" type="search" placeholder="Buscar nas ofertas..." aria-label="Buscar produto">
     <select id="sort" aria-label="Ordenar">
@@ -108,9 +112,11 @@
     </select>
   </div>
   <div class="chips" id="chips"></div>
+  </div>
+  <div class="chips hidden" id="couponChips"></div>
   <div class="grid" id="grid"></div>
   <div class="empty" id="empty" hidden>
-    <div id="emptyCat"></div>
+    <img src="assets/logo.jpg" alt="">
     <h2 id="emptyTitle"></h2>
     <p id="emptyText"></p>
   </div>
@@ -122,13 +128,17 @@
 
 <script src="site.js"></script>
 <script src="products.js"></script>
+<script src="coupons.js"></script>
 <script>
   const STORES = { mercadolivre:"Mercado Livre", amazon:"Amazon", shopee:"Shopee", magalu:"Magalu", collshp:"Collshp", outros:"Loja" };
   const brl = v => v.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
   const discount = p => p.oldPrice > p.price ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
-  const state = { q:"", cat:"Todos", sort:"discount" };
+  const state = { q:"", cat:"Todos", sort:"discount", tab:"all", cstore:"todos" };
+  const COUPON_STORES = [["todos", "Todos"], ["mercadolivre", "Mercado Livre"], ["amazon", "Amazon"], ["shopee", "Shopee"], ["outros", "Outros"]];
+  const groupOf = c => ["mercadolivre", "amazon", "shopee"].includes(c.store) ? c.store : "outros";
+  const catOf = p => (SITE.categories || []).includes(p.category) ? p.category : "Outros";
+  const inTab = () => true;
   const $ = id => document.getElementById(id);
-  const cat = () => document.getElementById("cat").content.cloneNode(true);
 
   function safeUrl(u) {
     try { const x = new URL(u, location.href); return ["http:","https:"].includes(x.protocol) ? x.href : "#"; }
@@ -147,14 +157,17 @@
     const t = el("div", "thumb");
     if (p.image) {
       const img = el("img"); img.src = safeUrl(p.image); img.alt = p.title; img.loading = "lazy"; img.referrerPolicy = "no-referrer"; t.append(img);
-    } else t.append(document.createTextNode(p.emoji || "🐱"));
+    } else {
+      const ph = el("img", "ph"); ph.src = "assets/logo.jpg"; ph.alt = ""; t.append(ph);
+    }
     const d = discount(p);
     if (d) t.append(el("span", "off", `-${d}%`));
     t.append(el("span", "store", STORES[p.store] || STORES.outros));
     const b = el("div", "body");
     b.append(el("div", "title", p.title));
     if (d) b.append(el("div", "old", brl(p.oldPrice)));
-    b.append(el("div", "price", brl(p.price)));
+    if (p.price) b.append(el("div", "price", brl(p.price)));
+    else b.append(el("div", "old", "Veja o preço atualizado na loja"));
     if (d) b.append(el("div", "save", `Economize ${brl(p.oldPrice - p.price)}`));
     const a = el("a", "btn", "Ver oferta");
     a.href = safeUrl(p.url); a.target = "_blank"; a.rel = "sponsored noopener noreferrer";
@@ -163,32 +176,89 @@
     return c;
   }
 
+  function activeCoupons() {
+    const today = new Date().toISOString().slice(0, 10);
+    return (window.COUPONS || []).filter(c => !c.validUntil || c.validUntil >= today);
+  }
+
+  function couponCard(c) {
+    const box = el("article", "coupon");
+    box.append(el("span", "store", c.storeName || STORES[c.store] || STORES.outros));
+    box.append(el("div", "desc", c.description || "Cupom de desconto"));
+    const code = el("div", "code");
+    code.append(el("span", undefined, c.code));
+    const copy = el("button", "copy", "Copiar");
+    copy.type = "button";
+    copy.onclick = async () => {
+      try { await navigator.clipboard.writeText(c.code); copy.textContent = "Copiado!"; } catch { copy.textContent = "Selecione e copie"; }
+      setTimeout(() => { copy.textContent = "Copiar"; }, 1800);
+    };
+    code.append(copy);
+    box.append(code);
+    if (c.validUntil) box.append(el("div", "valid", "Válido até " + new Date(c.validUntil + "T12:00:00").toLocaleDateString("pt-BR")));
+    const a = el("a", "btn", "Usar cupom");
+    a.href = safeUrl(c.url); a.target = "_blank"; a.rel = "sponsored noopener noreferrer";
+    box.append(a);
+    return box;
+  }
+
+  function couponChips() {
+    const all = activeCoupons();
+    $("couponChips").replaceChildren(...COUPON_STORES.map(([key, label]) => {
+      const n = key === "todos" ? all.length : all.filter(c => groupOf(c) === key).length;
+      const b = el("button", "chip" + (key === state.cstore ? " on" : ""), `${label} (${n})`);
+      b.type = "button";
+      b.onclick = () => { state.cstore = key; couponChips(); renderCoupons(); };
+      return b;
+    }));
+  }
+
+  function renderCoupons() {
+    const list = activeCoupons().filter(c => state.cstore === "todos" || groupOf(c) === state.cstore);
+    $("grid").replaceChildren(...list.map(couponCard));
+    $("empty").hidden = list.length > 0;
+    if (!list.length) {
+      $("emptyTitle").textContent = "Nenhum cupom ativo nesta loja";
+      $("emptyText").textContent = "Novos cupons chegam em breve. Confira as outras lojas ou os produtos!";
+    }
+  }
+
   function render() {
+    if (state.tab === "coupons") { couponChips(); return renderCoupons(); }
     const q = state.q.trim().toLowerCase();
-    const list = (window.PRODUCTS || []).filter(p => (state.cat === "Todos" || p.category === state.cat) && p.title.toLowerCase().includes(q));
-    const sorts = { discount:(a,b)=>discount(b)-discount(a), low:(a,b)=>a.price-b.price, high:(a,b)=>b.price-a.price };
+    const list = (window.PRODUCTS || []).filter(p => inTab(p) && (state.cat === "Todos" || catOf(p) === state.cat) && p.title.toLowerCase().includes(q));
+    const sorts = { discount:(a,b)=>discount(b)-discount(a), low:(a,b)=>(a.price??Infinity)-(b.price??Infinity), high:(a,b)=>(b.price??-1)-(a.price??-1) };
     list.sort(sorts[state.sort]);
     $("grid").replaceChildren(...list.map(card));
     $("empty").hidden = list.length > 0;
     if (!list.length) {
       const none = !(window.PRODUCTS || []).length;
-      $("emptyTitle").textContent = none ? "Os gatos estão garimpando..." : "Nada encontrado por aqui";
+      $("emptyTitle").textContent = none ? "Garimpando as melhores ofertas..." : "Nada encontrado por aqui";
       $("emptyText").textContent = none ? "As primeiras ofertas chegam em breve. Volte logo ou siga a gente no Instagram!" : "Tente outra busca ou categoria.";
     }
   }
 
   function chips() {
-    const cats = ["Todos", ...new Set((window.PRODUCTS || []).map(p => p.category))];
+    const all = window.PRODUCTS || [];
+    const cats = ["Todos", ...(SITE.categories || [])];
     $("chips").replaceChildren(...cats.map(c => {
-      const b = el("button", "chip" + (c === state.cat ? " on" : ""), c);
+      const n = c === "Todos" ? all.length : all.filter(p => catOf(p) === c).length;
+      const b = el("button", "chip" + (c === state.cat ? " on" : ""), `${c} (${n})`);
       b.type = "button";
       b.onclick = () => { state.cat = c; chips(); render(); };
       return b;
     }));
   }
 
-  $("logo").append(cat());
-  $("emptyCat").append(cat());
+  function tabs() {
+    $("productArea").classList.toggle("hidden", state.tab === "coupons");
+    $("couponChips").classList.toggle("hidden", state.tab !== "coupons");
+    document.querySelectorAll(".tab").forEach(b => {
+      b.classList.toggle("on", b.dataset.tab === state.tab);
+      b.onclick = () => { state.tab = b.dataset.tab; state.cat = "Todos"; tabs(); chips(); render(); };
+    });
+  }
+
   $("name").textContent = SITE.name;
   $("tagline").textContent = SITE.tagline;
   $("insta").href = safeUrl(SITE.instagram);
@@ -196,7 +266,7 @@
   document.title = SITE.name + " — Ofertas";
   $("q").oninput = e => { state.q = e.target.value; render(); };
   $("sort").onchange = e => { state.sort = e.target.value; render(); };
-  chips(); render();
+  tabs(); chips(); render();
 </script>
 </body>
 </html>
