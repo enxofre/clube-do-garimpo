@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clube do Garimpo — Ofertas</title>
+<meta name="description" content="Os gatos do Clube do Garimpo farejam as melhores ofertas e cupons para você economizar.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%B1%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg:#140f0a; --bg2:#1d1610; --card:#211911; --line:#3a2b1c;
+    --text:#fff4e6; --muted:#c4a98a; --orange:#ff7a00; --orange2:#ffa43a; --gold:#ffd23f; --green:#43d17a;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    margin:0; font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif; color:var(--text);
+    background:
+      radial-gradient(900px 420px at 80% -10%, rgba(255,122,0,.22), transparent 60%),
+      radial-gradient(700px 380px at 0% 0%, rgba(255,210,63,.10), transparent 60%),
+      var(--bg);
+    min-height:100vh;
+  }
+  .paws { position:fixed; inset:0; pointer-events:none; opacity:.05; z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23ff7a00' transform='rotate(-20 40 40)'%3E%3Cellipse cx='40' cy='48' rx='13' ry='10'/%3E%3Ccircle cx='24' cy='32' r='5'/%3E%3Ccircle cx='35' cy='24' r='5'/%3E%3Ccircle cx='47' cy='24' r='5'/%3E%3Ccircle cx='57' cy='32' r='5'/%3E%3C/g%3E%3Cg fill='%23ff7a00' transform='rotate(25 118 118)'%3E%3Cellipse cx='118' cy='126' rx='13' ry='10'/%3E%3Ccircle cx='102' cy='110' r='5'/%3E%3Ccircle cx='113' cy='102' r='5'/%3E%3Ccircle cx='125' cy='102' r='5'/%3E%3Ccircle cx='135' cy='110' r='5'/%3E%3C/g%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:1120px; margin:0 auto; padding:0 18px 50px; }
+
+  .hero { display:flex; align-items:center; gap:28px; padding:38px 0 18px; flex-wrap:wrap; justify-content:center; }
+  .hero svg { width:150px; height:150px; flex:none; filter:drop-shadow(0 8px 24px rgba(255,122,0,.35)); animation:float 4s ease-in-out infinite; }
+  @keyframes float { 50% { transform:translateY(-6px) rotate(-2deg); } }
+  .hero-text { max-width:560px; }
+  .badge { display:inline-block; background:rgba(255,122,0,.15); color:var(--orange2); border:1px solid rgba(255,122,0,.4); padding:4px 12px; border-radius:999px; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; }
+  h1 { margin:10px 0 6px; font-size:clamp(2rem,6vw,3.2rem); line-height:1.05; font-weight:900; }
+  h1 span { background:linear-gradient(90deg,var(--orange),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero p { margin:0; color:var(--muted); font-size:1.05rem; }
+  .cta { display:inline-block; margin-top:16px; padding:11px 20px; border-radius:12px; background:linear-gradient(135deg,var(--orange),var(--orange2)); color:#1b0e00; font-weight:800; text-decoration:none; box-shadow:0 8px 22px rgba(255,122,0,.35); }
+  .cta:hover { filter:brightness(1.08); }
+
+  .controls { display:flex; flex-wrap:wrap; gap:10px; margin:22px 0 14px; }
+  input, select { background:var(--card); color:var(--text); border:1px solid var(--line); border-radius:12px; padding:12px 14px; font-size:1rem; }
+  input { flex:1 1 240px; }
+  input:focus, select:focus { outline:2px solid var(--orange); border-color:transparent; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+  .chip { border:1px solid var(--line); background:var(--card); color:var(--muted); border-radius:999px; padding:8px 15px; cursor:pointer; font-size:.9rem; }
+  .chip:hover { border-color:var(--orange); color:var(--text); }
+  .chip.on { background:linear-gradient(135deg,var(--orange),var(--orange2)); border-color:transparent; color:#1b0e00; font-weight:700; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(235px,1fr)); gap:18px; }
+  .card { background:linear-gradient(180deg,var(--card),var(--bg2)); border:1px solid var(--line); border-radius:18px; overflow:hidden; display:flex; flex-direction:column; transition:transform .18s, border-color .18s, box-shadow .18s; }
+  .card:hover { transform:translateY(-4px); border-color:var(--orange); box-shadow:0 14px 30px rgba(255,122,0,.18); }
+  .thumb { position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; font-size:4rem; background:linear-gradient(135deg,#34261a,#1a130c); }
+  .thumb img { width:100%; height:100%; object-fit:cover; }
+  .off { position:absolute; top:10px; left:10px; background:var(--green); color:#062b14; font-weight:800; font-size:.85rem; padding:4px 10px; border-radius:9px; }
+  .store { position:absolute; top:10px; right:10px; background:rgba(20,15,10,.8); border:1px solid var(--line); font-size:.74rem; padding:4px 9px; border-radius:9px; }
+  .body { padding:14px; display:flex; flex-direction:column; gap:7px; flex:1; }
+  .title { font-size:.97rem; line-height:1.3; min-height:2.6em; }
+  .old { color:var(--muted); text-decoration:line-through; font-size:.85rem; }
+  .price { font-size:1.5rem; font-weight:900; color:var(--gold); }
+  .save { color:var(--green); font-size:.82rem; }
+  .btn { margin-top:auto; text-align:center; text-decoration:none; background:linear-gradient(135deg,var(--orange),var(--orange2)); color:#1b0e00; font-weight:800; padding:11px; border-radius:11px; }
+  .btn:hover { filter:brightness(1.1); }
+
+  .empty { text-align:center; padding:46px 16px; color:var(--muted); }
+  .empty svg { width:120px; height:120px; margin-bottom:6px; }
+  .empty h2 { color:var(--text); margin:6px 0; }
+  footer { position:relative; z-index:1; text-align:center; color:var(--muted); font-size:.8rem; padding:0 18px 34px; max-width:720px; margin:0 auto; }
+  footer b { color:var(--orange2); }
+</style>
+</head>
+<body>
+<div class="paws" aria-hidden="true"></div>
+
+<template id="cat">
+  <svg viewBox="0 0 200 200" role="img" aria-label="Gato minerador do Clube do Garimpo">
+    <polygon points="34,100 38,38 84,68" fill="#ff8a1f"/><polygon points="166,100 162,38 116,68" fill="#ff8a1f"/>
+    <polygon points="44,92 46,54 72,72" fill="#ffc9a0"/><polygon points="156,92 154,54 128,72" fill="#ffc9a0"/>
+    <ellipse cx="100" cy="116" rx="70" ry="58" fill="#ff8a1f"/>
+    <path d="M70 100 l6 -16 M100 96 l0 -18 M130 100 l-6 -16" stroke="#c4600a" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <ellipse cx="100" cy="140" rx="30" ry="22" fill="#ffe3c4"/>
+    <path d="M44 92 Q100 8 156 92 Z" fill="#ffd23f" stroke="#b8860b" stroke-width="3"/>
+    <rect x="36" y="88" width="128" height="12" rx="6" fill="#f5b800" stroke="#b8860b" stroke-width="3"/>
+    <circle cx="100" cy="52" r="12" fill="#fff7c2" stroke="#b8860b" stroke-width="3"/>
+    <ellipse cx="74" cy="120" rx="9" ry="11" fill="#1a1208"/><ellipse cx="126" cy="120" rx="9" ry="11" fill="#1a1208"/>
+    <circle cx="77" cy="116" r="3.2" fill="#fff"/><circle cx="129" cy="116" r="3.2" fill="#fff"/>
+    <polygon points="93,132 107,132 100,141" fill="#ff6f91"/>
+    <path d="M100 141 Q91 152 82 146 M100 141 Q109 152 118 146" stroke="#3a1c00" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M60 138 L28 132 M60 146 L28 150 M140 138 L172 132 M140 146 L172 150" stroke="#fff4e6" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>
+</template>
+
+<main class="wrap">
+  <section class="hero">
+    <div id="logo"></div>
+    <div class="hero-text">
+      <span class="badge">🐾 Garimpo de ofertas</span>
+      <h1><span id="name"></span></h1>
+      <p id="tagline"></p>
+      <a class="cta" id="insta" href="#" target="_blank" rel="noopener noreferrer">Siga no Instagram</a>
+    </div>
+  </section>
+
+  <div class="controls">
+    <input id="q" type="search" placeholder="Buscar nas ofertas..." aria-label="Buscar produto">
+    <select id="sort" aria-label="Ordenar">
+      <option value="discount">Maior desconto</option>
+      <option value="low">Menor preço</option>
+      <option value="high">Maior preço</option>
+    </select>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>
+    <div id="emptyCat"></div>
+    <h2 id="emptyTitle"></h2>
+    <p id="emptyText"></p>
+  </div>
+</main>
+<footer>
+  <p id="updated"></p>
+  <p>Como afiliados, podemos receber uma comissão pelas compras feitas pelos links, <b>sem custo extra para você</b>. Preços e disponibilidade podem mudar a qualquer momento nas lojas.</p>
+</footer>
+
+<script src="site.js"></script>
+<script src="products.js"></script>
+<script>
+  const STORES = { mercadolivre:"Mercado Livre", amazon:"Amazon", shopee:"Shopee", magalu:"Magalu", collshp:"Collshp", outros:"Loja" };
+  const brl = v => v.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+  const discount = p => p.oldPrice > p.price ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
+  const state = { q:"", cat:"Todos", sort:"discount" };
+  const $ = id => document.getElementById(id);
+  const cat = () => document.getElementById("cat").content.cloneNode(true);
+
+  function safeUrl(u) {
+    try { const x = new URL(u, location.href); return ["http:","https:"].includes(x.protocol) ? x.href : "#"; }
+    catch { return "#"; }
+  }
+
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function card(p) {
+    const c = el("article", "card");
+    const t = el("div", "thumb");
+    if (p.image) {
+      const img = el("img"); img.src = safeUrl(p.image); img.alt = p.title; img.loading = "lazy"; img.referrerPolicy = "no-referrer"; t.append(img);
+    } else t.append(document.createTextNode(p.emoji || "🐱"));
+    const d = discount(p);
+    if (d) t.append(el("span", "off", `-${d}%`));
+    t.append(el("span", "store", STORES[p.store] || STORES.outros));
+    const b = el("div", "body");
+    b.append(el("div", "title", p.title));
+    if (d) b.append(el("div", "old", brl(p.oldPrice)));
+    b.append(el("div", "price", brl(p.price)));
+    if (d) b.append(el("div", "save", `Economize ${brl(p.oldPrice - p.price)}`));
+    const a = el("a", "btn", "Ver oferta");
+    a.href = safeUrl(p.url); a.target = "_blank"; a.rel = "sponsored noopener noreferrer";
+    b.append(a);
+    c.append(t, b);
+    return c;
+  }
+
+  function render() {
+    const q = state.q.trim().toLowerCase();
+    const list = (window.PRODUCTS || []).filter(p => (state.cat === "Todos" || p.category === state.cat) && p.title.toLowerCase().includes(q));
+    const sorts = { discount:(a,b)=>discount(b)-discount(a), low:(a,b)=>a.price-b.price, high:(a,b)=>b.price-a.price };
+    list.sort(sorts[state.sort]);
+    $("grid").replaceChildren(...list.map(card));
+    $("empty").hidden = list.length > 0;
+    if (!list.length) {
+      const none = !(window.PRODUCTS || []).length;
+      $("emptyTitle").textContent = none ? "Os gatos estão garimpando..." : "Nada encontrado por aqui";
+      $("emptyText").textContent = none ? "As primeiras ofertas chegam em breve. Volte logo ou siga a gente no Instagram!" : "Tente outra busca ou categoria.";
+    }
+  }
+
+  function chips() {
+    const cats = ["Todos", ...new Set((window.PRODUCTS || []).map(p => p.category))];
+    $("chips").replaceChildren(...cats.map(c => {
+      const b = el("button", "chip" + (c === state.cat ? " on" : ""), c);
+      b.type = "button";
+      b.onclick = () => { state.cat = c; chips(); render(); };
+      return b;
+    }));
+  }
+
+  $("logo").append(cat());
+  $("emptyCat").append(cat());
+  $("name").textContent = SITE.name;
+  $("tagline").textContent = SITE.tagline;
+  $("insta").href = safeUrl(SITE.instagram);
+  $("updated").textContent = "Atualizado em " + new Date(SITE.updatedAt + "T12:00:00").toLocaleDateString("pt-BR");
+  document.title = SITE.name + " — Ofertas";
+  $("q").oninput = e => { state.q = e.target.value; render(); };
+  $("sort").onchange = e => { state.sort = e.target.value; render(); };
+  chips(); render();
+</script>
+</body>
+</html>
