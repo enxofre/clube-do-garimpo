@@ -12,9 +12,9 @@ const url = process.argv[2] ?? "https://collshp.com/deborasmagnus644?view=storef
 if (new URL(url).hostname !== "collshp.com") throw new Error("Somente URLs de collshp.com são aceitas.");
 
 const CATEGORIES = [
-  ["Casa", /sof[aá]|cristaleira|torradeira|panela|cama|lençol|colch|mesa|cadeira|cozinha|toalha|manta|decora|organizador|air ?fryer|liquidificador|ventilador|luminária/i],
+  ["Eletrônicos", /torradeira|air ?fryer|fritadeira|liquidificador|batedeira|cafeteira|chaleira|microondas|aspirador|ventilador|ferro de passar|fone|bluetooth|smartwatch|carregador|cabo |celular|tablet|notebook|caixa de som|mouse|teclado|c[aâ]mera|lâmpada inteligente/i],
+  ["Casa", /sof[aá]|cristaleira|panela|cama|lençol|colch|mesa|cadeira|banco|banquinho|cozinha|toalha|manta|decora|quadro|organizador|escorredor|lixeira|cabide|banheiro|saboneteira|dispenser|porta (caneta|l[aá]pis|treco)|luminária|plafon|prato|casinha|pergaminho|vaso|tapete|cortina|almofada|prateleira/i],
   ["Beleza", /s[eé]rum|creme|perfume|maquiagem|batom|shampoo|cabelo|skincare|hidratante/i],
-  ["Eletrônicos", /fone|bluetooth|smartwatch|carregador|cabo|celular|tablet|notebook|caixa de som|mouse|teclado|c[aâ]mera/i],
   ["Moda", /t[eê]nis|camiseta|vestido|cal[cç]a|bolsa|mochila|sand[aá]lia|blusa|bermuda|jaqueta/i],
 ];
 const categoryOf = title => CATEGORIES.find(([, re]) => re.test(title))?.[0] ?? "Outros";

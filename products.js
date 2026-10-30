@@ -11,7 +11,7 @@ window.PRODUCTS = [
   },
   {
     "title": "Kit Banheiro Lavabo Mystic 3 peças Vidro Canelado Marrom Detalhes Preto Dispenser Pote Saboneteira",
-    "category": "Outros",
+    "category": "Casa",
     "store": "shopee",
     "price": 74.92,
     "oldPrice": 187.28,
@@ -20,7 +20,7 @@ window.PRODUCTS = [
   },
   {
     "title": "Kit 50 Cabides Veludo De Roupa Antideslizante Slim Adulto  Gancho 360°",
-    "category": "Outros",
+    "category": "Casa",
     "store": "shopee",
     "price": 59.91,
     "oldPrice": 134.89,
@@ -29,7 +29,7 @@ window.PRODUCTS = [
   },
   {
     "title": "Kit De Banheiro Leopardo com 3 Peças de Cerâmica Cheetah Seanite Saboneteira Dispenser Porta Escova",
-    "category": "Outros",
+    "category": "Casa",
     "store": "shopee",
     "price": 59.9,
     "oldPrice": 129.9,
@@ -38,7 +38,7 @@ window.PRODUCTS = [
   },
   {
     "title": "Escorredor de Louça",
-    "category": "Outros",
+    "category": "Casa",
     "store": "shopee",
     "price": 58.75,
     "oldPrice": 119,
@@ -47,7 +47,7 @@ window.PRODUCTS = [
   },
   {
     "title": "Lixeira de Pedal Trium 46 + Cesto 4L  LX4450 - Ou",
-    "category": "Outros",
+    "category": "Casa",
     "store": "shopee",
     "price": 151.91,
     "oldPrice": 259.9,
@@ -56,7 +56,7 @@ window.PRODUCTS = [
   },
   {
     "title": "Torradeira Rosa Britânia 6 níveis de Tostagem 750W BTR04RS",
-    "category": "Casa",
+    "category": "Eletrônicos",
     "store": "shopee",
     "price": 85.41,
     "oldPrice": 119.9,
@@ -74,7 +74,7 @@ window.PRODUCTS = [
   },
   {
     "title": "Banco Bee Verde",
-    "category": "Outros",
+    "category": "Casa",
     "store": "shopee",
     "price": 103.55,
     "oldPrice": 119.98,
@@ -128,7 +128,7 @@ window.PRODUCTS = [
   },
   {
     "title": "Porta Lápis/Caneta de Gatinho - Minimalista Home Office Casa Escrivaninha Escritório",
-    "category": "Outros",
+    "category": "Casa",
     "store": "shopee",
     "price": 21.9,
     "image": "https://down-tx-br.img.susercontent.com/br-11134207-7r98o-mbrabqvi0nyx44.avif",
@@ -144,7 +144,7 @@ window.PRODUCTS = [
   },
   {
     "title": "Banco Rustico Coração Banquinho Madeira Rústica Pequeno",
-    "category": "Outros",
+    "category": "Casa",
     "store": "shopee",
     "price": 57.9,
     "image": "https://down-ws-br.img.susercontent.com/487bde14971d8997fb2da3ac68670f16.avif",
@@ -152,7 +152,7 @@ window.PRODUCTS = [
   },
   {
     "title": "CONJUNTO CASINHAS DE CERÂMICA ARTESANAL PARA PAREDE",
-    "category": "Outros",
+    "category": "Casa",
     "store": "shopee",
     "price": 52.5,
     "image": "https://down-zl-br.img.susercontent.com/br-11134207-81z1k-mefs50y0gu0ybc.avif",
